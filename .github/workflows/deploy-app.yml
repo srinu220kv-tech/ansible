@@ -1,7 +1,8 @@
 name: Build and Deploy Flask App to Kubernetes
 
 on:
-  workflow_dispatch:  # ✅ enables manual trigger button in GitHub UI
+  push:
+    branches: [ main ]
 
 env:
   DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}

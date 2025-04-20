@@ -18,7 +18,7 @@ jobs:
 
     - name: Add EC2 to known_hosts
       run: |
-        mkdir -p ~/.ssh
+        mkdir -p /home/runner/.ssh
         ssh-keyscan -H ${{ secrets.EC2_PUBLIC_IP }} >> ~/.ssh/known_hosts
 
     - name: Run Ansible Playbook to install K3s

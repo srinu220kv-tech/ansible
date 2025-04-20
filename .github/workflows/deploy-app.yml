@@ -41,7 +41,7 @@ jobs:
       uses: appleboy/ssh-action@v0.1.6
       with:
         host: ${{ env.SSH_HOST }}
-        username: ec2-user
+        username: ${{ secrets.EC2_SSH_USER }}
         key: ${{ env.SSH_KEY }}
         script: |
           export KUBECONFIG=$HOME/.kube/config

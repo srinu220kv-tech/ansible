@@ -1,0 +1,30 @@
+name: Install Kubernetes with Ansible on Amazon Linux EC2
+
+on:
+  workflow_dispatch:
+
+jobs:
+  install-k3s:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Install Ansible
+      run: |
+        sudo apt update
+        sudo apt install -y ansible
+
+    - name: Add EC2 to known_hosts
+      run: |
+        ssh-keyscan -H ${{ secrets.EC2_PUBLIC_IP }} >> ~/.ssh/known_hosts
+
+    - name: Run Ansible Playbook to install K3s
+      env:
+        ANSIBLE_HOST_KEY_CHECKING: false
+      run: |
+        echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > key.pem
+        chmod 600 key.pem
+        ansible-playbook ansible/install_k3s.yml -i "${{ secrets.EC2_PUBLIC_IP}}," \
+          --private-key=key.pem -u ec2-user

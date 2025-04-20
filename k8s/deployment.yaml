@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: flask
-        image: __IMAGE_NAME__
+        image: srinu220kv/flask-app:latest
         ports:
         - containerPort: 5000

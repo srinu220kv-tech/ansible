@@ -28,5 +28,5 @@ jobs:
       run: |
         echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > key.pem
         chmod 600 key.pem
-        ansible-playbook ansible/install_k3s.yml -i "${{ secrets.EC2_PUBLIC_IP}}," \
+        ansible-playbook install_k3s.yml -i "${{ secrets.EC2_PUBLIC_IP}}," \
           --private-key=key.pem -u ec2-user

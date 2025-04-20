@@ -1,0 +1,19 @@
+---
+- name: Install Docker and K3s Kubernetes on EC2
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Install Docker
+      yum:
+        name: docker
+        state: present
+
+    - name: Start and enable Docker
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Install K3s (lightweight Kubernetes)
+      shell: curl -sfL https://get.k3s.io | sh -

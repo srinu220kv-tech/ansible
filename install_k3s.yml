@@ -1,7 +1,7 @@
 ---
 - name: Install Docker and K3s Kubernetes on EC2
   hosts: all
-  become: yes
+  become: true
 
   tasks:
     - name: Install Docker

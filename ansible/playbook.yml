@@ -1,0 +1,32 @@
+- name: Install K3s on the server
+  hosts: k3s_server
+  become: yes
+  tasks:
+    - name: Install K3s server
+      shell: curl -sfL https://get.k3s.io | sh -
+
+    - name: Get K3s node token
+      shell: cat /var/lib/rancher/k3s/server/node-token
+      register: node_token
+
+    - name: Save token to file
+      copy:
+        content: "{{ node_token.stdout }}"
+        dest: /tmp/k3s_token.txt
+
+- name: Install K3s on the agents
+  hosts: k3s_agents
+  become: yes
+  tasks:
+    - name: Fetch token from server
+      fetch:
+        src: /tmp/k3s_token.txt
+        dest: /tmp/k3s_token.txt
+        flat: yes
+      delegate_to: k3s_server
+
+    - name: Install K3s agent
+      shell: |
+        export K3S_URL=https://<server-private-ip>:6443
+        export K3S_TOKEN=$(cat /tmp/k3s_token.txt)
+        curl -sfL https://get.k3s.io | K3S_URL=$K3S_URL K3S_TOKEN=$K3S_TOKEN sh -

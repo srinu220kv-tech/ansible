@@ -5,8 +5,7 @@ on:
 
 jobs:
   terraform-apply:
-    name: Terraform Apply on Self-Hosted Runner
-    runs-on: [self-hosted, label-2]
+    runs-on: ubuntu-latest
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

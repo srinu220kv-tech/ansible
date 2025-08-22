@@ -23,7 +23,7 @@ jobs:
       working-directory: terraform
 
     - name: Terraform Apply
-      run: terraform apply -auto-approve
+      run: terraform apply -auto-approve -var "key_name=terrform-test"
       env:
         TF_LOG: DEBUG
       working-directory: terraform
